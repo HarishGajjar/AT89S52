@@ -1,0 +1,5 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\LED_Blink" 
+
+PRINT(".\Listings\LED_Blink.map")

@@ -1,0 +1,80 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              08/03/2025 19:27:41 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OMF2 OPTIMIZE(8,SPEED) BROWSE DEBUG PRINT(.\Listings\main.lst) TA
+                    -BS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <AT89X52.H>       // Include header for AT89X52 microcontroller
+   2          
+   3          #define LED P2_0           // Define LED as bit 0 of Port 2 (P2.0)
+   4          
+   5          /**
+   6           * Function: delay
+   7           * ----------------
+   8           * Generates a blocking delay of approximately 'milliseconds' ms
+   9           * using nested software loops.
+  10           *
+  11           * Assumes system clock = 11.0592 MHz.
+  12           * Each iteration of the inner loop takes a few microseconds.
+  13           * The total delay per millisecond is calibrated by adjusting
+  14           * the loop bounds (i and j).
+  15           *
+  16           * Note:
+  17           * - This method is CPU-blocking and not precise.
+  18           * - Best used for simple tasks like LED blinking.
+  19           */
+  20          void delay(unsigned int milliseconds) {
+  21   1          unsigned int ms;
+  22   1          unsigned int i, j;
+  23   1      
+  24   1          for (ms = 0; ms < milliseconds; ms++) {
+  25   2              // Outer loop for coarse granularity
+  26   2              for (i = 0; i < 11; i++) {
+  27   3                  // Inner loop for fine control
+  28   3                  for (j = 0; j < 11; j++) {
+  29   4                      // Empty loop body — just wasting CPU cycles
+  30   4                      // Each iteration takes ~8–9 instruction cycles
+  31   4                      // Total delay per ms ˜ 11 × 11 × ~8.5 cycles ˜ 1000 µs
+  32   4                  }
+  33   3              }
+  34   2          }
+  35   1      }
+  36          
+  37          /**
+  38           * Function: main
+  39           * --------------
+  40           * Main program loop that toggles an LED every 1000 ms (1 second).
+  41           * Uses calibrated software delay to create a visible blinking effect.
+  42           */
+  43          void main() {
+  44   1          LED = 0;               // Initialize LED to OFF (logic low)
+  45   1      
+  46   1          while (1) {
+  47   2              LED = ~LED;        // Toggle LED state (ON ? OFF)
+  48   2              delay(1000);       // Wait for 1000 ms (1 second)
+  49   2          }
+  50   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     57    ----
+C51 COMPILER V9.60.7.0   MAIN                                                              08/03/2025 19:27:41 PAGE 2   
+
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
